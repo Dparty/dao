@@ -1,0 +1,133 @@
+package restaurant
+
+import (
+	"database/sql/driver"
+	"encoding/json"
+	"errors"
+
+	abstract "github.com/Dparty/dao/abstract"
+	"github.com/Dparty/dao/common"
+	"gorm.io/gorm"
+)
+
+type Item struct {
+	gorm.Model
+	RestaurantId uint              `json:"restaurantId" gorm:"index:idx_name,unique"`
+	Name         string            `json:"name"`
+	Pricing      int64             `json:"pricing"`
+	Attributes   Attributes        `json:"attributes"`
+	Images       common.StringList `json:"images" gorm:"type:JSON"`
+	Tags         common.StringList `json:"tags"`
+	Printers     common.IDList     `json:"printers"`
+	Categories   common.IDList     `json:"categories"`
+}
+
+func (i *Item) SetOwner(owner abstract.Owner) *Item {
+	i.RestaurantId = owner.ID()
+	return i
+}
+
+type Attributes []Attribute
+
+func (as Attributes) GetOption(left, right string) (Pair, error) {
+	for _, a := range as {
+		if left == a.Label {
+			for _, option := range a.Options {
+				if right == option.Label {
+					return Pair{Left: left, Right: right}, nil
+				}
+			}
+		}
+	}
+	return Pair{}, errors.New("NotFound")
+}
+
+func (Attributes) GormDataType() string {
+	return "JSON"
+}
+
+func (s *Attributes) Scan(value any) error {
+	return json.Unmarshal(value.([]byte), s)
+}
+
+func (s Attributes) Value() (driver.Value, error) {
+	b, err := json.Marshal(s)
+	return b, err
+}
+
+type Attribute struct {
+	Label   string   `json:"label"`
+	Options []Option `json:"options"`
+}
+
+type Option struct {
+	Label string `json:"label"`
+	Extra int64  `json:"extra"`
+}
+
+type Options []Option
+
+func (Options) GormDataType() string {
+	return "JSON"
+}
+
+func (s *Options) Scan(value any) error {
+	return json.Unmarshal(value.([]byte), s)
+}
+
+func (s Options) Value() (driver.Value, error) {
+	b, err := json.Marshal(s)
+	return b, err
+}
+
+func (Attribute) GormDataType() string {
+	return "JSON"
+}
+
+func (s *Attribute) Scan(value any) error {
+	return json.Unmarshal(value.([]byte), s)
+}
+
+func (s Attribute) Value() (driver.Value, error) {
+	b, err := json.Marshal(s)
+	return b, err
+}
+
+type Pair struct {
+	Left  string `json:"left"`
+	Right string `json:"right"`
+}
+
+type ItemRepository struct {
+	db *gorm.DB
+}
+
+func NewItemRepository(db *gorm.DB) ItemRepository {
+	return ItemRepository{
+		db: db,
+	}
+}
+
+func (i ItemRepository) Get(conds ...any) *Item {
+	var item Item
+	ctx := i.db.Find(&item, conds...)
+	if ctx.RowsAffected == 0 {
+		return nil
+	}
+	return &item
+}
+
+func (i ItemRepository) GetById(id uint) *Item {
+	return i.Get(id)
+}
+
+func (i ItemRepository) Save(item *Item) *Item {
+	i.db.Save(item)
+	return item
+}
+
+func (i ItemRepository) List(conds ...any) []Item {
+	var items []Item
+	i.db.Find(&items, conds...)
+	return items
+}
