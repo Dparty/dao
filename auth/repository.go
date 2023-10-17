@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"github.com/Dparty/common/fault"
+	"github.com/Dparty/common/utils"
 	"gorm.io/gorm"
 )
 
@@ -35,4 +37,22 @@ func (r AccountRepository) List(conds ...any) []Account {
 	var accounts []Account
 	r.db.Find(&accounts, conds...)
 	return accounts
+}
+func (r AccountRepository) Save(account *Account) *gorm.DB {
+	return r.db.Save(account)
+}
+
+func (r AccountRepository) Create(email, password, role string) (*Account, error) {
+	if account := r.GetByEmail(email); account != nil {
+		return nil, fault.ErrEmailExists
+	}
+	hashed, salt := utils.HashWithSalt(password)
+	account := Account{
+		Email:    email,
+		Password: hashed,
+		Salt:     salt,
+		Role:     role,
+	}
+	r.db.Save(&account)
+	return &account, nil
 }
