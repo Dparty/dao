@@ -2,16 +2,25 @@ package restaurant
 
 import (
 	abstract "github.com/Dparty/dao/abstract"
+	"github.com/Dparty/dao/auth"
 	"gorm.io/gorm"
 )
 
 type RestaurantRepository struct {
-	db *gorm.DB
+	db                *gorm.DB
+	accountRepoitory  auth.AccountRepository
+	tableRepository   TableRepository
+	itemRepository    ItemRepository
+	printerRepository PrinterRepository
 }
 
 func NewRestaurantRepository(db *gorm.DB) RestaurantRepository {
 	return RestaurantRepository{
-		db: db,
+		db:                db,
+		accountRepoitory:  auth.NewAccountRepository(db),
+		tableRepository:   NewTableRepository(db),
+		itemRepository:    NewItemRepository(db),
+		printerRepository: NewPrinterRepository(db),
 	}
 }
 

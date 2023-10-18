@@ -23,7 +23,7 @@ func (r Restaurant) ID() uint {
 }
 
 func (r Restaurant) Owner() *auth.Account {
-	return accountRepoitory.GetById(r.AccountId)
+	return restaurantRepository.accountRepoitory.GetById(r.AccountId)
 }
 
 func (r *Restaurant) SetOwner(owner abstract.Owner) *Restaurant {
@@ -33,30 +33,30 @@ func (r *Restaurant) SetOwner(owner abstract.Owner) *Restaurant {
 
 func (r Restaurant) AddTable(table *Table) *Table {
 	table.SetOwner(r)
-	tableRepository.Save(table)
+	restaurantRepository.tableRepository.Save(table)
 	return table
 }
 
 func (r Restaurant) Tables() []Table {
-	return tableRepository.List("restaurant_id = ?", r.ID())
+	return restaurantRepository.tableRepository.List("restaurant_id = ?", r.ID())
 }
 
 func (r Restaurant) AddItem(item *Item) *Item {
 	item.SetOwner(r)
-	itemRepository.Save(item)
+	restaurantRepository.itemRepository.Save(item)
 	return item
 }
 
 func (r Restaurant) Items() []Item {
-	return itemRepository.List("restaurant_id = ?", r.ID())
+	return restaurantRepository.itemRepository.List("restaurant_id = ?", r.ID())
 }
 
 func (r Restaurant) AddPrinter(printer *Printer) *Printer {
 	printer.SetOwner(r)
-	printerRepository.Save(printer)
+	restaurantRepository.printerRepository.Save(printer)
 	return printer
 }
 
 func (r Restaurant) Printers() []Printer {
-	return printerRepository.List("restaurant_id = ?", r.ID())
+	return restaurantRepository.printerRepository.List("restaurant_id = ?", r.ID())
 }
