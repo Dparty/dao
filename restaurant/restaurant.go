@@ -2,6 +2,7 @@ package restaurant
 
 import (
 	abstract "github.com/Dparty/dao/abstract"
+	"github.com/Dparty/dao/auth"
 	"gorm.io/gorm"
 )
 
@@ -21,7 +22,7 @@ func (r Restaurant) ID() uint {
 	return r.Model.ID
 }
 
-func (r Restaurant) Owner() abstract.Owner {
+func (r Restaurant) Owner() *auth.Account {
 	return accountRepoitory.GetById(r.AccountId)
 }
 
