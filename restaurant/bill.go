@@ -122,3 +122,15 @@ func (b BillRepository) List(conds ...any) []Bill {
 	b.db.Find(&bills, conds...)
 	return bills
 }
+
+func (b BillRepository) ListBy(restaurantId *string, status *string, startAt *int64, endAt *int64, tableId *string) []Bill {
+	var bills []Bill
+	ctx := b.db.Model(&bills)
+	if restaurantId != nil {
+		ctx = ctx.Where("restaurant_id = ?", *restaurantId)
+	}
+	if status != nil {
+		ctx = ctx.Where("restaurant_id = ?", *restaurantId)
+	}
+	return bills
+}

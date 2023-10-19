@@ -13,5 +13,5 @@ func Init(inject *gorm.DB) {
 	db = inject
 	restaurantRepository = NewRestaurantRepository(db)
 	billRepository = NewBillRepository(db)
-	db.AutoMigrate(&Restaurant{}, &Table{}, &Printer{}, &Item{})
+	db.AutoMigrate(&Restaurant{}, &Table{}, &Printer{}, &Item{}, &Bill{})
 }
