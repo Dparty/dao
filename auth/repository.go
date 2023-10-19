@@ -17,9 +17,9 @@ func NewAccountRepository(db *gorm.DB) AccountRepository {
 	}
 }
 
-func (r AccountRepository) Get(conds ...any) *Account {
+func (r AccountRepository) Find(conds ...any) *Account {
 	var account Account
-	ctx := r.db.Find(account, conds...)
+	ctx := r.db.Find(&account, conds...)
 	if ctx.RowsAffected == 0 {
 		return nil
 	}
@@ -27,11 +27,11 @@ func (r AccountRepository) Get(conds ...any) *Account {
 }
 
 func (r AccountRepository) GetById(id uint) *Account {
-	return r.Get(id)
+	return r.Find(id)
 }
 
 func (r AccountRepository) GetByEmail(email string) *Account {
-	return r.Get("email = ?", email)
+	return r.Find("email = ?", email)
 }
 
 func (r AccountRepository) List(conds ...any) []Account {
@@ -39,6 +39,7 @@ func (r AccountRepository) List(conds ...any) []Account {
 	r.db.Find(&accounts, conds...)
 	return accounts
 }
+
 func (r AccountRepository) Save(account *Account) *gorm.DB {
 	return r.db.Save(account)
 }
