@@ -19,7 +19,10 @@ type Item struct {
 	Images       common.StringList `json:"images" gorm:"type:JSON"`
 	Tags         common.StringList `json:"tags"`
 	Printers     common.IDList     `json:"printers"`
-	Categories   common.IDList     `json:"categories"`
+}
+
+func (i Item) ID() uint {
+	return i.Model.ID
 }
 
 func (i *Item) SetOwner(owner abstract.Owner) *Item {
@@ -130,4 +133,8 @@ func (i ItemRepository) List(conds ...any) []Item {
 	var items []Item
 	i.db.Find(&items, conds...)
 	return items
+}
+
+func (i ItemRepository) Delete(item *Item) *gorm.DB {
+	return i.db.Delete(item)
 }
