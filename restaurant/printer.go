@@ -67,3 +67,7 @@ func (p PrinterRepository) List(conds ...any) []Printer {
 	p.db.Find(&printers, conds...)
 	return printers
 }
+
+func (p PrinterRepository) Delete(id uint) *gorm.DB {
+	return p.db.Delete(&Printer{}, id)
+}
