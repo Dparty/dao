@@ -27,13 +27,19 @@ func (t *Table) SetOwner(owner abstract.Owner) *Table {
 	return t
 }
 
+func (t Table) Bills() []Bill {
+	return billRepository.List("table_id = ?", t.ID())
+}
+
 type TableRepository struct {
-	db *gorm.DB
+	db             *gorm.DB
+	billRepository BillRepository
 }
 
 func NewTableRepository(db *gorm.DB) TableRepository {
 	return TableRepository{
-		db: db,
+		db:             db,
+		billRepository: NewBillRepository(db),
 	}
 }
 
