@@ -3,6 +3,7 @@ package restaurant
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"time"
 
 	"github.com/Dparty/common/utils"
 	"gorm.io/gorm"
@@ -79,6 +80,7 @@ type Bill struct {
 	gorm.Model
 	RestaurantId uint `gorm:"index:rest_id"`
 	TableId      uint `gorm:"index:table_id_index"`
+	Status       string
 	Orders       Orders
 	PickUpCode   int64
 	TableLabel   string
@@ -123,14 +125,24 @@ func (b BillRepository) List(conds ...any) []Bill {
 	return bills
 }
 
-func (b BillRepository) ListBy(restaurantId *string, status *string, startAt *int64, endAt *int64, tableId *string) []Bill {
+func (b BillRepository) ListBy(restaurantId *string, status *string, tableId *string, startAt *time.Time, endAt *time.Time) []Bill {
 	var bills []Bill
 	ctx := b.db.Model(&bills)
 	if restaurantId != nil {
 		ctx = ctx.Where("restaurant_id = ?", *restaurantId)
 	}
 	if status != nil {
-		ctx = ctx.Where("restaurant_id = ?", *restaurantId)
+		ctx = ctx.Where("status = ?", *status)
 	}
+	if tableId != nil {
+		ctx = ctx.Where("table_id = ?", *tableId)
+	}
+	if startAt != nil {
+		ctx = ctx.Where("created_at >= ?", *startAt)
+	}
+	if endAt != nil {
+		ctx = ctx.Where("created_at <= ?", *endAt)
+	}
+	ctx.Find(&bills)
 	return bills
 }
