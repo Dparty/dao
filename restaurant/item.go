@@ -30,6 +30,10 @@ func (i *Item) SetOwner(owner abstract.Owner) *Item {
 	return i
 }
 
+func (i Item) Owner() *Restaurant {
+	return restaurantRepository.GetById(i.RestaurantId)
+}
+
 type Attributes []Attribute
 
 func (as Attributes) GetOption(left, right string) (Pair, error) {
