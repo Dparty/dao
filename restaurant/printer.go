@@ -49,6 +49,19 @@ func (p PrinterRepository) Save(printer *Printer) *Printer {
 	return printer
 }
 
+func (p PrinterRepository) Find(conds ...any) *Printer {
+	var printer Printer
+	ctx := p.db.Find(&printer, conds...)
+	if ctx.RowsAffected == 0 {
+		return nil
+	}
+	return &printer
+}
+
+func (p PrinterRepository) GetById(id uint) *Printer {
+	return p.Find(id)
+}
+
 func (p PrinterRepository) List(conds ...any) []Printer {
 	var printers []Printer
 	p.db.Find(&printers, conds...)
