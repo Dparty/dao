@@ -125,6 +125,11 @@ func (b BillRepository) List(conds ...any) []Bill {
 	return bills
 }
 
+func (b BillRepository) Save(bill *Bill) *Bill {
+	b.db.Save(bill)
+	return bill
+}
+
 func (b BillRepository) ListBy(restaurantId *string, status *string, tableId *string, startAt *time.Time, endAt *time.Time) []Bill {
 	var bills []Bill
 	ctx := b.db.Model(&bills)
