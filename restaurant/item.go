@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 
+	"github.com/Dparty/common/fault"
 	"github.com/Dparty/common/utils"
 	abstract "github.com/Dparty/dao/abstract"
 	"github.com/Dparty/dao/common"
@@ -13,7 +14,7 @@ import (
 
 type Item struct {
 	gorm.Model
-	RestaurantId uint              `json:"restaurantId" gorm:"index:idx_name,unique"`
+	RestaurantId uint              `json:"restaurantId" gorm:"index:restaurant_index"`
 	Name         string            `json:"name"`
 	Pricing      int64             `json:"pricing"`
 	Attributes   Attributes        `json:"attributes"`
@@ -143,22 +144,22 @@ func (i ItemRepository) GetById(id uint) *Item {
 }
 
 func (i ItemRepository) Save(item *Item) (*Item, error) {
-	// var attributesMap map[string]bool = make(map[string]bool)
-	// for _, attribute := range item.Attributes {
-	// 	_, ok := attributesMap[attribute.Label]
-	// 	if ok {
-	// 		return nil, fault.ErrItemAttributesConflict
-	// 	}
-	// 	attributesMap[attribute.Label] = true
-	// 	var optionMap map[string]bool = make(map[string]bool)
-	// 	for _, option := range attribute.Options {
-	// 		_, ok := optionMap[option.Label]
-	// 		if ok {
-	// 			return nil, fault.ErrItemAttributesConflict
-	// 		}
-	// 		optionMap[option.Label] = true
-	// 	}
-	// }
+	var attributesMap map[string]bool = make(map[string]bool)
+	for _, attribute := range item.Attributes {
+		_, ok := attributesMap[attribute.Label]
+		if ok {
+			return nil, fault.ErrItemAttributesConflict
+		}
+		attributesMap[attribute.Label] = true
+		var optionMap map[string]bool = make(map[string]bool)
+		for _, option := range attribute.Options {
+			_, ok := optionMap[option.Label]
+			if ok {
+				return nil, fault.ErrItemAttributesConflict
+			}
+			optionMap[option.Label] = true
+		}
+	}
 	i.db.Save(item)
 	return item, nil
 }
