@@ -2,8 +2,7 @@ package auth
 
 import (
 	"github.com/Dparty/common/utils"
-	interfaces "github.com/Dparty/dao/abstract"
-
+	abstract "github.com/Dparty/dao/abstract"
 	"gorm.io/gorm"
 )
 
@@ -19,11 +18,15 @@ func (a Account) ID() uint {
 	return a.Model.ID
 }
 
-func (a Account) Own(asset interfaces.Asset) bool {
+func (a Account) Own(asset abstract.Asset) bool {
 	return a.ID() == asset.Owner().ID()
 }
 
 func (a *Account) BeforeCreate(tx *gorm.DB) (err error) {
 	a.Model.ID = utils.GenerteId()
 	return err
+}
+
+func (a Account) Owner() abstract.Owner {
+	return nil
 }
