@@ -32,11 +32,7 @@ func (o Order) Equal(order Order) bool {
 }
 
 func (o Order) SpecificationToMap() map[string]string {
-	var m map[string]string = make(map[string]string)
-	for _, p := range o.Specification {
-		m[p.Left] = p.Right
-	}
-	return m
+	return SpecificationToMap(o.Specification)
 }
 
 func SpecificationToMap(specification []Pair) map[string]string {

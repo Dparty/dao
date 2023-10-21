@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 
+	"github.com/Dparty/common/fault"
 	abstract "github.com/Dparty/dao/abstract"
 	"github.com/Dparty/dao/common"
 	"gorm.io/gorm"
@@ -128,9 +129,25 @@ func (i ItemRepository) GetById(id uint) *Item {
 	return i.Get(id)
 }
 
-func (i ItemRepository) Save(item *Item) *Item {
+func (i ItemRepository) Save(item *Item) (*Item, error) {
+	var attributesMap map[string]bool = make(map[string]bool)
+	for _, attribute := range item.Attributes {
+		_, ok := attributesMap[attribute.Label]
+		if ok {
+			return nil, fault.ErrItemAttributesConflict
+		}
+		attributesMap[attribute.Label] = true
+		var optionMap map[string]bool = make(map[string]bool)
+		for _, option := range attribute.Options {
+			_, ok := optionMap[option.Label]
+			if ok {
+				return nil, fault.ErrItemAttributesConflict
+			}
+			optionMap[option.Label] = true
+		}
+	}
 	i.db.Save(item)
-	return item
+	return item, nil
 }
 
 func (i ItemRepository) List(conds ...any) []Item {
