@@ -1,6 +1,7 @@
 package restaurant
 
 import (
+	"github.com/Dparty/common/utils"
 	abstract "github.com/Dparty/dao/abstract"
 	"gorm.io/gorm"
 )
@@ -11,6 +12,11 @@ type Table struct {
 	Label        string `json:"label"`
 	X            int64  `json:"x"`
 	Y            int64  `json:"y"`
+}
+
+func (a *Table) BeforeCreate(tx *gorm.DB) (err error) {
+	a.Model.ID = utils.GenerteId()
+	return err
 }
 
 // Owner implements interfaces.Asset.

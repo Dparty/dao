@@ -1,6 +1,7 @@
 package restaurant
 
 import (
+	"github.com/Dparty/common/utils"
 	abstract "github.com/Dparty/dao/abstract"
 	"gorm.io/gorm"
 )
@@ -19,6 +20,11 @@ type Printer struct {
 	Sn           string      `json:"sn"`
 	Description  string      `json:"description"`
 	Type         PrinterType `json:"type" gorm:"type:VARCHAR(128)"`
+}
+
+func (a *Printer) BeforeCreate(tx *gorm.DB) (err error) {
+	a.Model.ID = utils.GenerteId()
+	return err
 }
 
 func (p Printer) ID() uint {

@@ -1,6 +1,7 @@
 package restaurant
 
 import (
+	"github.com/Dparty/common/utils"
 	abstract "github.com/Dparty/dao/abstract"
 	"gorm.io/gorm"
 )
@@ -10,6 +11,11 @@ type Restaurant struct {
 	AccountId   uint
 	Name        string
 	Description string
+}
+
+func (a *Restaurant) BeforeCreate(tx *gorm.DB) (err error) {
+	a.Model.ID = utils.GenerteId()
+	return err
 }
 
 // Own implements interfaces.Owner.

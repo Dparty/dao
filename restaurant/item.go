@@ -6,6 +6,7 @@ import (
 	"errors"
 
 	"github.com/Dparty/common/fault"
+	"github.com/Dparty/common/utils"
 	abstract "github.com/Dparty/dao/abstract"
 	"github.com/Dparty/dao/common"
 	"gorm.io/gorm"
@@ -20,6 +21,11 @@ type Item struct {
 	Images       common.StringList `json:"images" gorm:"type:JSON"`
 	Tags         common.StringList `json:"tags"`
 	Printers     common.IDList     `json:"printers"`
+}
+
+func (a *Item) BeforeCreate(tx *gorm.DB) (err error) {
+	a.Model.ID = utils.GenerteId()
+	return err
 }
 
 func (i Item) ID() uint {
