@@ -39,6 +39,14 @@ func (o Order) SpecificationToMap() map[string]string {
 	return m
 }
 
+func SpecificationToMap(specification []Pair) map[string]string {
+	var m map[string]string = make(map[string]string)
+	for _, p := range specification {
+		m[p.Left] = p.Right
+	}
+	return m
+}
+
 func (o Order) Extra(p Pair) int64 {
 	for _, attr := range o.Item.Attributes {
 		if attr.Label == p.Left {
