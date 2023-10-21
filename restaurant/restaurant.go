@@ -69,5 +69,5 @@ func (r Restaurant) Printers() []Printer {
 func (r Restaurant) PickUpCode() int64 {
 	var bill Bill
 	billRepository.db.Order("pick_up_code DESC").Find(&bill, "restaurant_id = ?", r.ID())
-	return bill.PickUpCode + 1
+	return (bill.PickUpCode + 1) % 1000
 }
