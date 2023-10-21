@@ -35,6 +35,14 @@ func (i Item) Owner() *Restaurant {
 	return restaurantRepository.GetById(i.RestaurantId)
 }
 
+func (i Item) CreateOrder(specification []Pair) (Order, error) {
+	// TODO: specification verification
+	return Order{
+		Item:          i,
+		Specification: specification,
+	}, nil
+}
+
 type Attributes []Attribute
 
 func (as Attributes) GetOption(left, right string) (Pair, error) {
