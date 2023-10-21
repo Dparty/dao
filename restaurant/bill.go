@@ -10,13 +10,12 @@ import (
 )
 
 type Order struct {
-	gorm.Model
 	Item          Item   `json:"item" gorm:"type:JSON"`
 	Specification []Pair `json:"specification"`
 }
 
 func (o Order) Equal(order Order) bool {
-	if o.ID != order.ID {
+	if o.Item.ID() != order.Item.ID() {
 		return false
 	}
 	om := o.SpecificationToMap()
@@ -100,11 +99,12 @@ func (b *Bill) BeforeCreate(tx *gorm.DB) (err error) {
 }
 
 func NewBillRepository(db *gorm.DB) BillRepository {
-	return BillRepository{db: db}
+	return BillRepository{db: db, itemRepository: NewItemRepository(db)}
 }
 
 type BillRepository struct {
-	db *gorm.DB
+	db             *gorm.DB
+	itemRepository ItemRepository
 }
 
 func (b BillRepository) Find(conds ...any) *Bill {
