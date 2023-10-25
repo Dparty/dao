@@ -33,8 +33,14 @@ func (t *Table) SetOwner(owner abstract.Owner) *Table {
 	return t
 }
 
-func (t Table) Bills() []Bill {
-	return billRepository.List("table_id = ?", t.ID())
+func (t Table) Bills(status *string) []Bill {
+	var bills []Bill
+	ctx := db.Where("table_id = ?", t.ID())
+	if status != nil {
+		ctx = db.Where("status = ?", *status)
+	}
+	ctx.Find(&bills)
+	return bills
 }
 
 type TableRepository struct {
