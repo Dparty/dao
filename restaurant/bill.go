@@ -87,6 +87,7 @@ type Bill struct {
 	Orders       Orders
 	PickUpCode   int64
 	TableLabel   string
+	Offset       int64
 }
 
 func (b Bill) Total() int64 {
