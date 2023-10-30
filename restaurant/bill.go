@@ -81,12 +81,12 @@ func (s Orders) Value() (driver.Value, error) {
 
 type Bill struct {
 	gorm.Model
-	RestaurantId uint `gorm:"index:rest_id"`
-	TableId      uint `gorm:"index:table_id_index"`
-	Status       string
+	RestaurantId uint   `gorm:"index:rest_id"`
+	TableId      uint   `gorm:"index:table_id_index"`
+	Status       string `gorm:"type:VARCHAR(128)"`
 	Orders       Orders
 	PickUpCode   int64
-	TableLabel   string
+	TableLabel   string `gorm:"type:VARCHAR(128)"`
 	Offset       int64
 }
 

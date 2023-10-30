@@ -11,6 +11,7 @@ type Restaurant struct {
 	AccountId   uint
 	Name        string
 	Description string
+	Offset      int64
 }
 
 func (a *Restaurant) BeforeCreate(tx *gorm.DB) (err error) {
