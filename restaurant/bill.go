@@ -92,8 +92,8 @@ type Bill struct {
 
 func (b Bill) Total() int64 {
 	var total int64 = 0
-	for _, item := range b.Orders {
-		total += item.Total()
+	for _, order := range b.Orders {
+		total += order.Total()
 	}
 	return total
 }
@@ -120,6 +120,7 @@ func (b BillRepository) Find(conds ...any) *Bill {
 	}
 	return &bill
 }
+
 func (b BillRepository) GetById(id uint) *Bill {
 	return b.Find(id)
 }

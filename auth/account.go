@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"time"
+
 	"github.com/Dparty/common/utils"
 	abstract "github.com/Dparty/dao/abstract"
 	"gorm.io/gorm"
@@ -12,6 +14,8 @@ type Account struct {
 	Password string `json:"password" gorm:"type:CHAR(128)"`
 	Salt     []byte `json:"salt"`
 	Role     string `json:"role" gorm:"type:VARCHAR(128)"`
+	Gender   string `json:"gender"`
+	Birthday time.Time
 }
 
 func (a Account) ID() uint {
