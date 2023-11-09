@@ -21,6 +21,7 @@ type Item struct {
 	Images       common.StringList `json:"images" gorm:"type:JSON"`
 	Tags         common.StringList `json:"tags"`
 	Printers     common.IDList     `json:"printers"`
+	Status       string            `json:"status"`
 }
 
 func (a *Item) BeforeCreate(tx *gorm.DB) (err error) {
