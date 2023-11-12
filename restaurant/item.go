@@ -62,7 +62,7 @@ func (as Attributes) GetOption(left, right string) (Pair, error) {
 			}
 		}
 	}
-	return Pair{}, errors.New("NotFound")
+	return Pair{}, errors.New("not found")
 }
 
 func (Attributes) GormDataType() string {

@@ -20,7 +20,7 @@ type Printer struct {
 	Sn           string      `json:"sn"`
 	Description  string      `json:"description"`
 	Type         PrinterType `json:"type" gorm:"type:VARCHAR(128)"`
-	PrinterModel string      `json:"printerModel" gorm:"type:VARCHAR(128)"`
+	PrinterModel string      `json:"printerModel" gorm:"type:VARCHAR(128);default:58mm"`
 }
 
 func (a *Printer) BeforeCreate(tx *gorm.DB) (err error) {
