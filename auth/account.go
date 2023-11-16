@@ -3,8 +3,8 @@ package auth
 import (
 	"time"
 
+	abstract "github.com/Dparty/common/abstract"
 	"github.com/Dparty/common/utils"
-	abstract "github.com/Dparty/dao/abstract"
 	"gorm.io/gorm"
 )
 
@@ -23,7 +23,7 @@ func (a Account) ID() uint {
 }
 
 func (a Account) Own(asset abstract.Asset) bool {
-	return a.ID() == asset.Owner().ID()
+	return abstract.Own(a, asset)
 }
 
 func (a *Account) BeforeCreate(tx *gorm.DB) (err error) {

@@ -3,7 +3,7 @@ module github.com/Dparty/dao
 go 1.21.1
 
 require (
-	github.com/Dparty/common v0.0.0-20231021010642-807615a29e5c
+	github.com/Dparty/common v0.0.0-20231116073827-4e6f998c5355
 	gorm.io/driver/mysql v1.5.2
 	gorm.io/gorm v1.25.5
 )

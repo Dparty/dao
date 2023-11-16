@@ -42,6 +42,10 @@ github.com/Dparty/common v0.0.0-20230929033726-ff769bca8c94 h1:YYt8QQbi9RQB+0GDu
 github.com/Dparty/common v0.0.0-20230929033726-ff769bca8c94/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
 github.com/Dparty/common v0.0.0-20231021010642-807615a29e5c h1:uOqHWrnZF6ZzKnPWo9llDpYr/JPM/SVKGYcVadVyhNA=
 github.com/Dparty/common v0.0.0-20231021010642-807615a29e5c/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
+github.com/Dparty/common v0.0.0-20231116072628-aa3c2fd37c2e h1:LN2L4M5iTt0ZOzjl7MfwroUtO/wHBv1kaYMYrv37Qv0=
+github.com/Dparty/common v0.0.0-20231116072628-aa3c2fd37c2e/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
+github.com/Dparty/common v0.0.0-20231116073827-4e6f998c5355 h1:46jQM7nC9VNsN0LlTOGSOBYXCznbpi3S4YJ5rxBxOk4=
+github.com/Dparty/common v0.0.0-20231116073827-4e6f998c5355/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
 github.com/bwmarrin/snowflake v0.3.0 h1:xm67bEhkKh6ij1790JB83OujPR5CzNe8QuQqAgISZN0=
 github.com/bwmarrin/snowflake v0.3.0/go.mod h1:NdZxfVWX+oR6y2K0o6qAYv6gIOP9rjG0/E9WsDpxqwE=
 github.com/bytedance/sonic v1.5.0/go.mod h1:ED5hyg4y6t3/9Ku1R6dU/4KyJ48DZ4jPhfY1O2AihPM=

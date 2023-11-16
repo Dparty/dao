@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 
+	abstract "github.com/Dparty/common/abstract"
 	"github.com/Dparty/common/fault"
 	"github.com/Dparty/common/utils"
-	abstract "github.com/Dparty/dao/abstract"
 	"github.com/Dparty/dao/common"
 	"gorm.io/gorm"
 )

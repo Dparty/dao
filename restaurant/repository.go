@@ -1,7 +1,7 @@
 package restaurant
 
 import (
-	abstract "github.com/Dparty/dao/abstract"
+	abstract "github.com/Dparty/common/abstract"
 	"github.com/Dparty/dao/auth"
 	"gorm.io/gorm"
 )
