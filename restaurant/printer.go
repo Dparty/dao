@@ -2,7 +2,7 @@ package restaurant
 
 import (
 	abstract "github.com/Dparty/common/abstract"
-	"github.com/Dparty/common/utils"
+	"github.com/Dparty/common/snowflake"
 	"gorm.io/gorm"
 )
 
@@ -23,8 +23,10 @@ type Printer struct {
 	PrinterModel string      `json:"printerModel" gorm:"type:VARCHAR(128);default:58mm"`
 }
 
+var printerIdGenerator = snowflake.NewIdGenertor(1)
+
 func (a *Printer) BeforeCreate(tx *gorm.DB) (err error) {
-	a.Model.ID = utils.GenerteId()
+	a.Model.ID = printerIdGenerator.Uint()
 	return err
 }
 

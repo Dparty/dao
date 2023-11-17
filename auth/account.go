@@ -4,7 +4,7 @@ import (
 	"time"
 
 	abstract "github.com/Dparty/common/abstract"
-	"github.com/Dparty/common/utils"
+	"github.com/Dparty/common/snowflake"
 	"gorm.io/gorm"
 )
 
@@ -26,8 +26,10 @@ func (a Account) Own(asset abstract.Asset) bool {
 	return abstract.Own(a, asset)
 }
 
+var accountIdGenerator = snowflake.NewIdGenertor(1)
+
 func (a *Account) BeforeCreate(tx *gorm.DB) (err error) {
-	a.Model.ID = utils.GenerteId()
+	a.Model.ID = accountIdGenerator.Uint()
 	return err
 }
 

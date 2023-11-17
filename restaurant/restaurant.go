@@ -2,9 +2,11 @@ package restaurant
 
 import (
 	abstract "github.com/Dparty/common/abstract"
-	"github.com/Dparty/common/utils"
+	"github.com/Dparty/common/snowflake"
 	"gorm.io/gorm"
 )
+
+var restaurantIdGenerator = snowflake.NewIdGenertor(1)
 
 type Restaurant struct {
 	gorm.Model
@@ -15,7 +17,7 @@ type Restaurant struct {
 }
 
 func (a *Restaurant) BeforeCreate(tx *gorm.DB) (err error) {
-	a.Model.ID = utils.GenerteId()
+	a.Model.ID = restaurantIdGenerator.Uint()
 	return err
 }
 

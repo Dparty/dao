@@ -48,6 +48,12 @@ github.com/Dparty/common v0.0.0-20231116073827-4e6f998c5355 h1:46jQM7nC9VNsN0LlT
 github.com/Dparty/common v0.0.0-20231116073827-4e6f998c5355/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
 github.com/Dparty/common v0.0.0-20231116081526-d4557a18ca69 h1:U/n4npzlHUJYLEC3NK02cCiQuvAmvO3+UR8BmMPaX6Y=
 github.com/Dparty/common v0.0.0-20231116081526-d4557a18ca69/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
+github.com/Dparty/common v0.0.0-20231117071116-8cd8eb8a6b6f h1:Bl2HSDvNo1TghZwf5zeiCtZhvG90lSIg/joUFgqyFNI=
+github.com/Dparty/common v0.0.0-20231117071116-8cd8eb8a6b6f/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
+github.com/Dparty/common v0.0.0-20231117071432-782f1fdbf500 h1:ODs2lO7oPRZinsQspXZOMBNxbh3usSY2ulDLbVpCHOU=
+github.com/Dparty/common v0.0.0-20231117071432-782f1fdbf500/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
+github.com/Dparty/common v0.0.0-20231117071835-afd08e73760c h1:3Ku3dVzEmWHHJrCOXU1Y1s5OvQR6kHdCYhD7PimzTXU=
+github.com/Dparty/common v0.0.0-20231117071835-afd08e73760c/go.mod h1:sY807DCbNdj2+kTNspZcO7/X1zJBmTmxy5TSQA7+lL8=
 github.com/bwmarrin/snowflake v0.3.0 h1:xm67bEhkKh6ij1790JB83OujPR5CzNe8QuQqAgISZN0=
 github.com/bwmarrin/snowflake v0.3.0/go.mod h1:NdZxfVWX+oR6y2K0o6qAYv6gIOP9rjG0/E9WsDpxqwE=
 github.com/bytedance/sonic v1.5.0/go.mod h1:ED5hyg4y6t3/9Ku1R6dU/4KyJ48DZ4jPhfY1O2AihPM=

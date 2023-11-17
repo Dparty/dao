@@ -7,7 +7,7 @@ import (
 
 	abstract "github.com/Dparty/common/abstract"
 	"github.com/Dparty/common/fault"
-	"github.com/Dparty/common/utils"
+	"github.com/Dparty/common/snowflake"
 	"github.com/Dparty/dao/common"
 	"gorm.io/gorm"
 )
@@ -24,8 +24,10 @@ type Item struct {
 	Status       string            `json:"status" gorm:"type:VARCHAR(32);default:ACTIVED"`
 }
 
+var itemIdGenerator = snowflake.NewIdGenertor(1)
+
 func (a *Item) BeforeCreate(tx *gorm.DB) (err error) {
-	a.Model.ID = utils.GenerteId()
+	a.Model.ID = itemIdGenerator.Uint()
 	return err
 }
 

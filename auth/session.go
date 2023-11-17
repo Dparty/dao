@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/Dparty/common/constants"
-	"github.com/Dparty/common/utils"
+	"github.com/Dparty/common/snowflake"
 
 	"gorm.io/gorm"
 )
@@ -18,7 +18,9 @@ type Session struct {
 	ExpiredAt   time.Time             `json:"expiredAt"`
 }
 
+var sessionIdGenerator = snowflake.NewIdGenertor(1)
+
 func (a *Session) BeforeCreate(tx *gorm.DB) (err error) {
-	a.ID = utils.GenerteId()
+	a.ID = sessionIdGenerator.Uint()
 	return
 }

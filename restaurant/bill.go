@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/Dparty/common/utils"
+	"github.com/Dparty/common/snowflake"
 	"gorm.io/gorm"
 )
 
@@ -98,8 +98,10 @@ func (b Bill) Total() int64 {
 	return total
 }
 
+var billIdGenerator = snowflake.NewIdGenertor(1)
+
 func (b *Bill) BeforeCreate(tx *gorm.DB) (err error) {
-	b.ID = utils.GenerteId()
+	b.ID = billIdGenerator.Uint()
 	return err
 }
 
