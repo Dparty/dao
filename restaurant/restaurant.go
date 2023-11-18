@@ -14,6 +14,7 @@ type Restaurant struct {
 	Name        string
 	Description string
 	Offset      int64
+	Categories  []string `gorm:"type:JSON"`
 }
 
 func (a *Restaurant) BeforeCreate(tx *gorm.DB) (err error) {
