@@ -62,3 +62,7 @@ func (r RestaurantRepository) Create(owner abstract.Owner, name, description str
 	db.Save(&restaurant)
 	return restaurant
 }
+
+func (r RestaurantRepository) Save(restaurant *Restaurant) {
+	r.db.Save(restaurant)
+}
