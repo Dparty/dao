@@ -47,10 +47,6 @@ func (r Restaurant) AddTable(table *Table) *Table {
 	return table
 }
 
-func (r Restaurant) Tables() []Table {
-	return restaurantRepository.tableRepository.List("restaurant_id = ?", r.ID())
-}
-
 func (r Restaurant) AddItem(item *Item) *Item {
 	item.SetOwner(r)
 	restaurantRepository.itemRepository.Save(item)
@@ -65,10 +61,6 @@ func (r Restaurant) AddPrinter(printer *Printer) *Printer {
 	printer.SetOwner(r)
 	restaurantRepository.printerRepository.Save(printer)
 	return printer
-}
-
-func (r Restaurant) Printers() []Printer {
-	return restaurantRepository.printerRepository.List("restaurant_id = ?", r.ID())
 }
 
 func (r Restaurant) PickUpCode() int64 {
