@@ -63,10 +63,6 @@ func (r Restaurant) AddPrinter(printer *Printer) *Printer {
 	return printer
 }
 
-func (r Restaurant) Printers() []Printer {
-	return restaurantRepository.printerRepository.List("restaurant_id = ?", r.ID())
-}
-
 func (r Restaurant) PickUpCode() int64 {
 	var bill Bill
 	billRepository.db.Order("pick_up_code DESC").Find(&bill, "restaurant_id = ?", r.ID())
