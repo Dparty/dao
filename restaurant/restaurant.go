@@ -3,6 +3,7 @@ package restaurant
 import (
 	abstract "github.com/Dparty/common/abstract"
 	"github.com/Dparty/common/snowflake"
+	"github.com/Dparty/dao/common"
 	"gorm.io/gorm"
 )
 
@@ -14,7 +15,7 @@ type Restaurant struct {
 	Name        string
 	Description string
 	Offset      int64
-	Categories  []string `gorm:"type:JSON"`
+	Categories  common.StringList
 }
 
 func (a *Restaurant) BeforeCreate(tx *gorm.DB) (err error) {
