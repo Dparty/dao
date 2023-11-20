@@ -22,6 +22,7 @@ type Item struct {
 	Tags         common.StringList `json:"tags"`
 	Printers     common.IDList     `json:"printers"`
 	Status       string            `json:"status" gorm:"type:VARCHAR(32);default:ACTIVED"`
+	Alcohol      bool              `json:"alcohol"`
 }
 
 var itemIdGenerator = snowflake.NewIdGenertor(1)
