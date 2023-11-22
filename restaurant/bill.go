@@ -5,13 +5,14 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/Dparty/common/data"
 	"github.com/Dparty/common/snowflake"
 	"gorm.io/gorm"
 )
 
 type Order struct {
-	Item          Item   `json:"item" gorm:"type:JSON"`
-	Specification []Pair `json:"specification"`
+	Item          Item                        `json:"item" gorm:"type:JSON"`
+	Specification []data.Pair[string, string] `json:"specification"`
 }
 
 func (o Order) Equal(order Order) bool {
@@ -35,19 +36,19 @@ func (o Order) SpecificationToMap() map[string]string {
 	return SpecificationToMap(o.Specification)
 }
 
-func SpecificationToMap(specification []Pair) map[string]string {
+func SpecificationToMap(specification []data.Pair[string, string]) map[string]string {
 	var m map[string]string = make(map[string]string)
 	for _, p := range specification {
-		m[p.Left] = p.Right
+		m[p.L] = p.R
 	}
 	return m
 }
 
-func (o Order) Extra(p Pair) int64 {
+func (o Order) Extra(p data.Pair[string, string]) int64 {
 	for _, attr := range o.Item.Attributes {
-		if attr.Label == p.Left {
+		if attr.Label == p.L {
 			for _, option := range attr.Options {
-				if option.Label == p.Right {
+				if option.Label == p.R {
 					return option.Extra
 				}
 			}

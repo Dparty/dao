@@ -6,6 +6,7 @@ import (
 	"errors"
 
 	abstract "github.com/Dparty/common/abstract"
+	"github.com/Dparty/common/data"
 	"github.com/Dparty/common/fault"
 	"github.com/Dparty/common/snowflake"
 	"github.com/Dparty/dao/common"
@@ -45,7 +46,7 @@ func (i Item) Owner() *Restaurant {
 	return restaurantRepository.GetById(i.RestaurantId)
 }
 
-func (i Item) CreateOrder(specification []Pair) (Order, error) {
+func (i Item) CreateOrder(specification []data.Pair[string, string]) (Order, error) {
 	// TODO: specification verification
 	return Order{
 		Item:          i,
@@ -55,17 +56,17 @@ func (i Item) CreateOrder(specification []Pair) (Order, error) {
 
 type Attributes []Attribute
 
-func (as Attributes) GetOption(left, right string) (Pair, error) {
+func (as Attributes) GetOption(left, right string) (data.Pair[string, string], error) {
 	for _, a := range as {
 		if left == a.Label {
 			for _, option := range a.Options {
 				if right == option.Label {
-					return Pair{Left: left, Right: right}, nil
+					return data.Pair[string, string]{L: left, R: right}, nil
 				}
 			}
 		}
 	}
-	return Pair{}, errors.New("not found")
+	return data.Pair[string, string]{}, errors.New("not found")
 }
 
 func (Attributes) GormDataType() string {
@@ -117,11 +118,6 @@ func (s *Attribute) Scan(value any) error {
 func (s Attribute) Value() (driver.Value, error) {
 	b, err := json.Marshal(s)
 	return b, err
-}
-
-type Pair struct {
-	Left  string `json:"left"`
-	Right string `json:"right"`
 }
 
 type ItemRepository struct {
