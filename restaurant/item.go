@@ -9,9 +9,20 @@ import (
 	"github.com/Dparty/common/data"
 	"github.com/Dparty/common/fault"
 	"github.com/Dparty/common/snowflake"
+	"github.com/Dparty/dao"
 	"github.com/Dparty/dao/common"
 	"gorm.io/gorm"
 )
+
+var itemRepository *ItemRepository
+
+// GetItemRepository returns the item repository by Lazy bones
+func GetItemRepository() *ItemRepository {
+	if itemRepository == nil {
+		itemRepository = NewItemRepository()
+	}
+	return itemRepository
+}
 
 type Item struct {
 	gorm.Model
@@ -124,9 +135,9 @@ type ItemRepository struct {
 	db *gorm.DB
 }
 
-func NewItemRepository(db *gorm.DB) ItemRepository {
-	return ItemRepository{
-		db: db,
+func NewItemRepository() *ItemRepository {
+	return &ItemRepository{
+		db: dao.GetDBInstance(),
 	}
 }
 

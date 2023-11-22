@@ -7,8 +7,18 @@ import (
 
 	"github.com/Dparty/common/data"
 	"github.com/Dparty/common/snowflake"
+	"github.com/Dparty/dao"
 	"gorm.io/gorm"
 )
+
+var billRepository *BillRepository
+
+func GetBillRepository() *BillRepository {
+	if billRepository == nil {
+		billRepository = NewBillRepository()
+	}
+	return billRepository
+}
 
 type Order struct {
 	Item          Item                        `json:"item" gorm:"type:JSON"`
@@ -106,13 +116,13 @@ func (b *Bill) BeforeCreate(tx *gorm.DB) (err error) {
 	return err
 }
 
-func NewBillRepository(db *gorm.DB) BillRepository {
-	return BillRepository{db: db, itemRepository: NewItemRepository(db)}
+func NewBillRepository() *BillRepository {
+	return &BillRepository{db: dao.GetDBInstance(), itemRepository: GetItemRepository()}
 }
 
 type BillRepository struct {
 	db             *gorm.DB
-	itemRepository ItemRepository
+	itemRepository *ItemRepository
 }
 
 func (b BillRepository) Find(conds ...any) *Bill {

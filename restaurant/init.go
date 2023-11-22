@@ -1,17 +1,13 @@
 package restaurant
 
 import (
+	"github.com/Dparty/dao"
 	"gorm.io/gorm"
 )
 
 var db *gorm.DB
 
-var restaurantRepository RestaurantRepository
-var billRepository BillRepository
-
-func Init(inject *gorm.DB) {
-	db = inject
+func init() {
+	db = dao.GetDBInstance()
 	db.AutoMigrate(&Restaurant{}, &Table{}, &Printer{}, &Item{}, &Bill{})
-	restaurantRepository = NewRestaurantRepository(db)
-	billRepository = NewBillRepository(db)
 }

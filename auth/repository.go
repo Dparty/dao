@@ -4,15 +4,26 @@ import (
 	"errors"
 
 	"github.com/Dparty/common/utils"
+	"github.com/Dparty/dao"
 	"gorm.io/gorm"
 )
+
+var accountRepository *AccountRepository
+
+// GetAccountRepository returns the account repository by Lazy bones
+func GetAccountRepository() *AccountRepository {
+	if accountRepository == nil {
+		accountRepository = NewAccountRepository(dao.GetDBInstance())
+	}
+	return accountRepository
+}
 
 type AccountRepository struct {
 	db *gorm.DB
 }
 
-func NewAccountRepository(db *gorm.DB) AccountRepository {
-	return AccountRepository{
+func NewAccountRepository(db *gorm.DB) *AccountRepository {
+	return &AccountRepository{
 		db: db,
 	}
 }

@@ -2,25 +2,36 @@ package restaurant
 
 import (
 	abstract "github.com/Dparty/common/abstract"
+	"github.com/Dparty/dao"
 	"github.com/Dparty/dao/auth"
 	"gorm.io/gorm"
 )
 
-type RestaurantRepository struct {
-	db                *gorm.DB
-	accountRepoitory  auth.AccountRepository
-	tableRepository   TableRepository
-	itemRepository    ItemRepository
-	printerRepository PrinterRepository
+var restaurantRepository *RestaurantRepository
+
+// GetRestaurantRepository returns the restaurant repository by Lazy bones
+func GetRestaurantRepository() *RestaurantRepository {
+	if restaurantRepository == nil {
+		restaurantRepository = NewRestaurantRepository()
+	}
+	return restaurantRepository
 }
 
-func NewRestaurantRepository(db *gorm.DB) RestaurantRepository {
-	return RestaurantRepository{
-		db:                db,
-		accountRepoitory:  auth.NewAccountRepository(db),
-		tableRepository:   NewTableRepository(db),
-		itemRepository:    NewItemRepository(db),
-		printerRepository: NewPrinterRepository(db),
+type RestaurantRepository struct {
+	db                *gorm.DB
+	accountRepoitory  *auth.AccountRepository
+	tableRepository   *TableRepository
+	itemRepository    *ItemRepository
+	printerRepository *PrinterRepository
+}
+
+func NewRestaurantRepository() *RestaurantRepository {
+	return &RestaurantRepository{
+		db:                dao.GetDBInstance(),
+		accountRepoitory:  auth.GetAccountRepository(),
+		tableRepository:   GetTableRepository(),
+		itemRepository:    GetItemRepository(),
+		printerRepository: GetPrinterRepository(),
 	}
 }
 
@@ -59,7 +70,7 @@ func (r RestaurantRepository) Create(owner abstract.Owner, name, description str
 		Description: description,
 	}
 	restaurant.SetOwner(owner)
-	db.Save(&restaurant)
+	r.db.Save(&restaurant)
 	return restaurant
 }
 

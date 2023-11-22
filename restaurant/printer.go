@@ -3,8 +3,19 @@ package restaurant
 import (
 	abstract "github.com/Dparty/common/abstract"
 	"github.com/Dparty/common/snowflake"
+	"github.com/Dparty/dao"
 	"gorm.io/gorm"
 )
+
+var printerPrinterRepository *PrinterRepository
+
+// GetPrinterRepository returns the printer repository by Lazy bones
+func GetPrinterRepository() *PrinterRepository {
+	if printerPrinterRepository == nil {
+		printerPrinterRepository = NewPrinterRepository(dao.GetDBInstance())
+	}
+	return printerPrinterRepository
+}
 
 type PrinterType string
 
@@ -43,8 +54,8 @@ func (p *Printer) SetOwner(owner abstract.Owner) *Printer {
 	return p
 }
 
-func NewPrinterRepository(db *gorm.DB) PrinterRepository {
-	return PrinterRepository{
+func NewPrinterRepository(db *gorm.DB) *PrinterRepository {
+	return &PrinterRepository{
 		db: db,
 	}
 }

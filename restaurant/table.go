@@ -3,8 +3,18 @@ package restaurant
 import (
 	abstract "github.com/Dparty/common/abstract"
 	"github.com/Dparty/common/snowflake"
+	"github.com/Dparty/dao"
 	"gorm.io/gorm"
 )
+
+var tableRepository *TableRepository
+
+func GetTableRepository() *TableRepository {
+	if tableRepository == nil {
+		tableRepository = NewTableRepository()
+	}
+	return tableRepository
+}
 
 var tableIdGenerator = snowflake.NewIdGenertor(10)
 
@@ -47,13 +57,13 @@ func (t Table) Bills(status *string) []Bill {
 
 type TableRepository struct {
 	db             *gorm.DB
-	billRepository BillRepository
+	billRepository *BillRepository
 }
 
-func NewTableRepository(db *gorm.DB) TableRepository {
-	return TableRepository{
-		db:             db,
-		billRepository: NewBillRepository(db),
+func NewTableRepository() *TableRepository {
+	return &TableRepository{
+		db:             dao.GetDBInstance(),
+		billRepository: GetBillRepository(),
 	}
 }
 
