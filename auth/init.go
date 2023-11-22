@@ -7,7 +7,7 @@ import (
 
 var db *gorm.DB
 
-func Init() {
+func init() {
 	db = dao.GetDBInstance()
 	db.AutoMigrate(&Account{})
 }
