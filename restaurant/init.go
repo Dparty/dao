@@ -7,5 +7,5 @@ import (
 var db = dao.GetDBInstance()
 
 func init() {
-	db.AutoMigrate(&Restaurant{}, &Table{}, &Printer{}, &Item{}, &Bill{})
+	db.AutoMigrate(&Restaurant{}, &Table{}, &Printer{}, &Item{}, &Bill{}, &Offset{})
 }
