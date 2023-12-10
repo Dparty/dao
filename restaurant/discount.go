@@ -1,0 +1,62 @@
+package restaurant
+
+import (
+	"github.com/Dparty/dao"
+	"gorm.io/gorm"
+)
+
+type Discount struct {
+	gorm.Model
+	RestaurantId uint
+	Label        string
+	Offset       int64
+}
+
+type DiscountRepository struct {
+	db *gorm.DB
+}
+
+var discountRepository *DiscountRepository
+
+// GetDiscountRepository returns the discount repository by Lazy bones
+func GetDiscountRepository() *DiscountRepository {
+	if discountRepository == nil {
+		discountRepository = NewDiscountRepository()
+	}
+	return discountRepository
+}
+
+func NewDiscountRepository() *DiscountRepository {
+	return &DiscountRepository{
+		db: dao.GetDBInstance(),
+	}
+}
+
+func (r DiscountRepository) Find(conds ...any) *Discount {
+	var discount Discount
+	ctx := r.db.Find(&discount, conds...)
+	if ctx.RowsAffected == 0 {
+		return nil
+	}
+	return &discount
+}
+
+func (r DiscountRepository) FindById(id uint) *Discount {
+	return r.Find(id)
+}
+
+func (r DiscountRepository) List(conds ...any) []Discount {
+	var discounts []Discount
+	r.db.Find(&discounts, conds...)
+	return discounts
+}
+
+func (r DiscountRepository) ListBy(restaurantId uint) []Discount {
+	var discounts []Discount
+	r.db.Where("restaurant_id = ?", restaurantId).Find(&discounts)
+	return discounts
+}
+
+func (r DiscountRepository) Create(discount *Discount) {
+	r.db.Save(discount)
+}
