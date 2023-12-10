@@ -68,3 +68,7 @@ func (r DiscountRepository) ListBy(restaurantId uint) []Discount {
 func (r DiscountRepository) Save(discount *Discount) {
 	r.db.Save(discount)
 }
+
+func (r DiscountRepository) Delete(discount *Discount) {
+	r.db.Delete(discount)
+}
