@@ -1,6 +1,7 @@
 package restaurant
 
 import (
+	"github.com/Dparty/common/snowflake"
 	"github.com/Dparty/dao"
 	"gorm.io/gorm"
 )
@@ -10,6 +11,13 @@ type Discount struct {
 	RestaurantId uint
 	Label        string
 	Offset       int64
+}
+
+var discountIdGenerator = snowflake.NewIdGenertor(1)
+
+func (a *Discount) BeforeCreate(tx *gorm.DB) (err error) {
+	a.Model.ID = discountIdGenerator.Uint()
+	return err
 }
 
 type DiscountRepository struct {
