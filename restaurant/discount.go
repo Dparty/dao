@@ -1,6 +1,7 @@
 package restaurant
 
 import (
+	"github.com/Dparty/common/singleton"
 	"github.com/Dparty/common/snowflake"
 	"github.com/Dparty/dao"
 	"gorm.io/gorm"
@@ -24,17 +25,13 @@ type DiscountRepository struct {
 	db *gorm.DB
 }
 
-var discountRepository *DiscountRepository
+var discountRepository = singleton.NewSingleton[DiscountRepository](newDiscountRepository, singleton.Eager)
 
-// GetDiscountRepository returns the discount repository by Lazy bones
 func GetDiscountRepository() *DiscountRepository {
-	if discountRepository == nil {
-		discountRepository = NewDiscountRepository()
-	}
-	return discountRepository
+	return discountRepository.Get()
 }
 
-func NewDiscountRepository() *DiscountRepository {
+func newDiscountRepository() *DiscountRepository {
 	return &DiscountRepository{
 		db: dao.GetDBInstance(),
 	}
